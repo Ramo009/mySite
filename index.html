@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books - My Website</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        position: relative;
+        height: 300px;
+        overflow: hidden;
+      }
+
+      /* Header */
+      .header-image {
+        background-image: url("px.jpg");
+        background-size: cover;
+        background-position: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        position: relative;
+      }
+      h1 {
+        font-size: 1.5em;
+        color: #fff;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 700;
+        text-align: center;
+        background: linear-gradient(135deg, #d91b02a9, #1c5eeba7);
+        padding: 20px 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease-out;
+        cursor: pointer;
+        font-style: italic;
+      }
+
+      /* Hover Effect */
+      h1:hover {
+        transform: translateY(-5px) scale(1.05);
+        background: linear-gradient(135deg, #0e59ee94, #f03b1390);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Animation on Load */
+      h1::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.426);
+        transform: skewX(-30deg);
+        transition: all 0.7s ease-in-out;
+      }
+
+      h1:hover::before {
+        left: 100%;
+      }
+
+      h1:hover {
+        animation: h1-pop 0.7s ease forwards;
+      }
+
+      @keyframes h1-pop {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1.05);
+        }
+      }
+
+      /* Align navigation to the right */
+      nav {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+
+      ul.nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      ul.nav-links li a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        transition: background 0.3s;
+      }
+
+      ul.nav-links li a:hover {
+        background-color: rgba(255, 255, 255, 0.267);
+        border-radius: 5px;
+      }
+
+      /* Dropdown Menu */
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #7c7878b3;
+        min-width: 140px;
+        z-index: 1;
+        list-style: none;
+        padding: 0;
+        margin: 10px 0 0 0;
+        border-radius: 5px;
+      }
+
+      .dropdown-content li {
+        padding: 10px;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      h2 {
+        font-size: 1.5em;
+        color: #333;
+        text-align: center;
+        position: relative;
+        padding-bottom: 10px;
+        transition: color 0.3s ease;
+        font-family: fantasy;
+      }
+
+      /* Underline effect using ::after pseudo-element */
+      h2::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 3px;
+        background: #ffcc00;
+        transition: width 0.4s ease;
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+      }
+
+      h2:hover {
+        color: #ff6600;
+      }
+
+      h2:hover::after {
+        width: 100%;
+      }
+
+      main {
+        margin: 20px;
+      }
+
+      .columns {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(200px, 1fr)
+        ); /* Responsive column sizing */
+        gap: 20px; /* Space between grid items */
+        margin: 20px 0;
+      }
+
+      .column {
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid #e0e0e0;
+      }
+
+      .column:hover {
+        background: #ffeb8c;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .section-image {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        border: 1px solid #cccccc;
+        transition: transform 0.3s ease;
+      }
+
+      .column:hover .section-image {
+        transform: scale(1.05); /* Slight scale-up on hover */
+      }
+
+      @media screen and (max-width: 750px) {
+        .columns {
+          grid-template-columns: repeat(
+            auto-fill,
+            minmax(150px, 1fr)
+          ); /* For smaller screens */
+        }
+      }
+
+      /* //////////////////////////// */
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        scroll-behavior: auto;
+      }
+
+      /* .overlay-content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        width: 80%;
+        max-width: 600px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      } */
+      .overlay-content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        width: 80%;
+        max-width: 600px;
+        max-height: 80%; /* Limit height to 80% of the viewport */
+        overflow-y: auto; /* Enable vertical scrolling */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .overlay h2 {
+        margin-top: 0;
+      }
+
+      .overlay p {
+        margin: 10px 0;
+      }
+
+      .overlay-image {
+        width: 40%;
+        height: 8em;
+        /* max-height: 300px; */
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .overlay-content {
+        animation: overlayFade 0.5s ease;
+      }
+
+      @keyframes overlayFade {
+        from {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        padding: 4px 0;
+        background: #333;
+        font-size: xx-small;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-image">
+        <h1>Welcome to my Website</h1>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li class="dropdown">
+              <a href="books.html">Books</a>
+              <ul class="dropdown-content">
+                <li><a href="#">Fiction</a></li>
+                <li><a href="#">Non-Fiction</a></li>
+                <li><a href="#">Science</a></li>
+              </ul>
+            </li>
+            <li><a href="about.html">About Me</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <h2>Improve your knowledge</h2>
+
+      <div class="columns">
+        <div
+          class="column"
+          data-image="5.png"
+          data-title="The Great Gatsby"
+          data-content="A novel by F. Scott Fitzgerald, set in the 1920s, exploring themes of wealth and society."
+        >
+          <img src="5.png" alt="The Great Gatsby" class="section-image" />
+          <h4 class="book-title">The Great Gatsby</h4>
+          <p>mollitia veniam! Praesentium, beatae.</p>
+        </div>
+        <div
+          class="column"
+          data-image="5.png"
+          data-title="The Great Gatsby"
+          data-content="A novel by F. Scott Fitzgerald, set in the 1920s, exploring themes of wealth and society."
+        >
+          <img src="5.png" alt="The Great Gatsby" class="section-image" />
+          <h4 class="book-title">The Great Gatsby</h4>
+          <p>mollitia veniam! Praesentium, beatae.</p>
+        </div>
+        <div
+          class="column"
+          data-image="5.png"
+          data-title="The Great Gatsby"
+          data-content="A novel by F. Scott Fitzgerald, set in the 1920s, exploring themes of wealth and society."
+        >
+          <img src="5.png" alt="The Great Gatsby" class="section-image" />
+          <h4 class="book-title">The Great Gatsby</h4>
+          <p>mollitia veniam! Praesentium, beatae.</p>
+        </div>
+        <div
+          class="column"
+          data-image="5.png"
+          data-title="The Great Gatsby"
+          data-content="A novel by F. Scott Fitzgerald, set in the 1920s, exploring themes of wealth and society."
+        >
+          <img src="5.png" alt="The Great Gatsby" class="section-image" />
+          <h4 class="book-title">The Great Gatsby</h4>
+          <p>mollitia veniam! Praesentium, beatae.</p>
+        </div>
+        <div
+          class="column"
+          data-image="5.png"
+          data-title="The Great Gatsby"
+          data-content="A novel by F. Scott Fitzgerald, set in the 1920s, exploring themes of wealth and society."
+        >
+          <img src="5.png" alt="The Great Gatsby" class="section-image" />
+          <h4 class="book-title">The Great Gatsby</h4>
+          <p>mollitia veniam! Praesentium, beatae.</p>
+        </div>
+        <div
+          class="column"
+          data-image="5.png"
+          data-title="The Great Gatsby"
+          data-content="A novel by F. Scott Fitzgerald, set in the 1920s, exploring themes of wealth and society."
+        >
+          <img src="5.png" alt="The Great Gatsby" class="section-image" />
+          <h4 class="book-title">The Great Gatsby</h4>
+          <p>mollitia veniam! Praesentium, beatae.</p>
+        </div>
+        <div
+          class="column"
+          data-image="5.png"
+          data-title="1984"
+          data-content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
+          reiciendis cumque rem totam culpa blanditiis fuga voluptates quos
+          aspernatur saepe alias voluptatibus maxime excepturi repudiandae id
+          mollitia in, fugit magnam quae repellendus facere obcaecati
+          deserunt! Architecto enim est reiciendis delectus ratione eum
+          provident ex qui ad magni? Dolorem quod nemo dignissimos voluptatum
+          quis in illum eaque placeat corrupti. Eligendi dolorum rerum iste
+          est molestias provident saepe natus ipsum reprehenderit architecto
+          sunt assumenda harum sit cupiditate, amet, officiis incidunt. Nulla
+          vitae eveniet minima esse reiciendis iste dignissimos porro
+          nesciunt, temporibus rem architecto in! Fugit reiciendis harum oditLorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
+          reiciendis cumque rem totam culpa blanditiis fuga voluptates quos
+          aspernatur saepe alias voluptatibus maxime excepturi repudiandae id
+          mollitia in, fugit magnam quae repellendus facere obcaecati
+          deserunt! Architecto enim est reiciendis delectus ratione eum
+          provident ex qui ad magni? Dolorem quod nemo dignissimos voluptatum
+          quis in illum eaque placeat corrupti. Eligendi dolorum rerum iste
+          est molestias provident saepe natus ipsum reprehenderit architecto
+          sunt assumenda harum sit cupiditate, amet, officiis incidunt. Nulla
+          vitae eveniet minima esse reiciendis iste dignissimos porro
+          nesciunt, temporibus rem architecto in! Fugit reiciendis harum odit"
+        >
+          <img src="5.png" alt="1984" class="section-image" />
+          <h4 class="book-title">1984</h4>
+          <p>1984 - George Orwell</p>
+        </div>
+      </div>
+
+      <section>
+        <h2>Check out my reviews on these books for insights and thoughts!</h2>
+      </section>
+    </main>
+
+    <button id="openOverlayButton" class="search-button">Open Overlay</button>
+
+    <div id="overlay" class="overlay">
+      <div class="overlay-content">
+        <h2 id="overlayTitle">Overlay Title</h2>
+        <img
+          id="overlayImage"
+          class="overlay-image"
+          src=""
+          alt="Overlay Image"
+        />
+        <p id="overlayContent">
+          This is the overlay content. You can put any content here.
+        </p>
+        <button id="closeOverlayButton" class="search-button">Close</button>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 created by Ramazan</p>
+    </footer>
+
+    <script>
+      "use strict";
+
+      const overlay = document.getElementById("overlay");
+      const overlayTitle = document.getElementById("overlayTitle");
+      const overlayContent = document.getElementById("overlayContent");
+      const overlayImage = document.getElementById("overlayImage");
+      const closeOverlayButton = document.getElementById("closeOverlayButton");
+
+      // Function to open the overlay with dynamic content
+      function openOverlay(title, content, image) {
+        overlayTitle.innerText = title;
+        overlayContent.innerText = content;
+        overlayImage.src = image;
+        overlayImage.alt = title; // Set alt attribute for accessibility
+        overlay.style.display = "flex"; // Show the overlay
+      }
+
+      // Close overlay when clicking the close button
+      closeOverlayButton.addEventListener("click", () => {
+        overlay.style.display = "none"; // Hide the overlay
+      });
+
+      // Close overlay when clicking outside the content
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) {
+          overlay.style.display = "none";
+        }
+      });
+
+      // Add click event to each column to open the overlay
+      document.querySelectorAll(".column").forEach((column) => {
+        column.addEventListener("click", function () {
+          const title = column.getAttribute("data-title");
+          const content = column.getAttribute("data-content");
+          const image = column.getAttribute("data-image"); // Get the image source
+          openOverlay(title, content, image); // Open the overlay with the book's title, content, and image
+        });
+      });
+    </script>
+  </body>
+</html>
